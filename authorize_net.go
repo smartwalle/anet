@@ -3,11 +3,11 @@ package anet4go
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"strings"
-	"fmt"
 )
 
 const (
