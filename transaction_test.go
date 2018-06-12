@@ -1,6 +1,7 @@
 package anet4go
 
 import (
+	"fmt"
 	"testing"
 )
 
