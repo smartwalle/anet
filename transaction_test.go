@@ -2,14 +2,12 @@ package anet4go
 
 import (
 	"testing"
-	"fmt"
 )
 
 func TestAuthorizeNet_CreateTransaction(t *testing.T) {
 	var p = &CreateTransactionParam{}
 	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_AUTH_ONLY
 	p.CreateTransactionRequest.TransactionRequest.Amount = "100"
-	//p.CreateTransactionRequest.TransactionRequest.RefTransId = "60104453508"
 	var payment = &Payment{}
 	var creditCard = &CreditCard{}
 	creditCard.CardNumber = "5145919892544954"
@@ -35,3 +33,15 @@ func TestAuthorizeNet_CreateTransaction(t *testing.T) {
 	}
 	fmt.Println(rsp.Messages.ResultCode)
 }
+
+//func TestAuthorizeNet_Charge(t *testing.T) {
+//	fmt.Println(client.Charge("123", "100", "f", "y", "5145919892544954", "2020-01", "123", "China", "SC", "CD", "123456", "ADD"))
+//}
+//
+//func TestAuthorizeNet_Auth(t *testing.T) {
+//	fmt.Println(client.Charge("1234", "100", "f", "y", "5145919892544954", "2020-01", "123", "China", "SC", "CD", "123456", "ADD"))
+//}
+
+//func TestAuthorizeNet_CaptureWithAutoCode(t *testing.T) {
+//	client.CaptureWithAutoCode("MFQFPQ", "100", "5145919892544954", "2020-01", "123")
+//}

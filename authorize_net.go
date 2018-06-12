@@ -7,20 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
-	"fmt"
 )
-
-// 测试信息
-
-// API Credentials
-// API LOGIN ID
-// 4Wb9uKQ8L
-//
-// TRANSACTION KEY
-// 43H7ncQDc65979ky
-//
-// KEY
-// Simon
 
 const (
 	k_PRODUCTION_API_URL = "https://api.authorize.net/xml/v1/request.api"
@@ -83,8 +70,6 @@ func (this *AuthorizeNet) doRequest(method string, param Param, results interfac
 		return err
 	}
 	data = bytes.TrimPrefix(data, k_RESPONSE_PREFIX)
-
-	fmt.Println(string(data))
 
 	err = json.Unmarshal(data, results)
 	if err != nil {

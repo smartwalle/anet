@@ -1,9 +1,10 @@
 package anet4go
 
 const (
-	K_TRANSACTION_TYPE_CHARGE    = "authCaptureTransaction"
-	K_TRANSACTION_TYPE_AUTH_ONLY = "authOnlyTransaction"
-	K_TRANSACTION_TYPE_CAPTURE   = "priorAuthCaptureTransaction"
+	K_TRANSACTION_TYPE_CHARGE                 = "authCaptureTransaction"
+	K_TRANSACTION_TYPE_AUTH_ONLY              = "authOnlyTransaction"
+	K_TRANSACTION_TYPE_CAPTURE_WITH_TRANS_ID  = "priorAuthCaptureTransaction"
+	K_TRANSACTION_TYPE_CAPTURE_WITH_AUTH_CODE = "captureOnlyTransaction"
 )
 
 type CreateTransactionParam struct {
@@ -18,11 +19,12 @@ type CreateTransactionParam struct {
 			Tax             *Amount    `json:"tax,omitempty"`
 			Duty            *Amount    `json:"duty,omitempty"`
 			Shipping        *Amount    `json:"shipping,omitempty"`
-			PoNumber        string     `json:"poNumber"`
-			Customer        *Customer  `json:"customer"`
+			PoNumber        string     `json:"poNumber,omitempty"`
+			Customer        *Customer  `json:"customer,omitempty"`
 			BillTo          *Address   `json:"billTo,omitempty"`
 			ShipTo          *Address   `json:"shipTo,omitempty"`
-			CustomerIP      string     `json:"customerIP"`
+			CustomerIP      string     `json:"customerIP,omitempty"`
+			AuthCode        string     `json:"authCode,omitempty"`
 		} `json:"transactionRequest"`
 	} `json:"createTransactionRequest"`
 }
@@ -74,7 +76,7 @@ type Customer struct {
 	Id string `json:"id"`
 }
 
-type CreateTransactionRsp struct {
+type TransactionRsp struct {
 	TransactionResponse struct {
 		ResponseCode   string     `json:"responseCode"`
 		AuthCode       string     `json:"authCode"`
