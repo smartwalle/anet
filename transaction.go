@@ -78,3 +78,17 @@ func (this *AuthorizeNet) CaptureWithAutoCode(authCode, amount, cardNumber, expi
 	p.CreateTransactionRequest.TransactionRequest.AuthCode = authCode
 	return this.CreateTransaction(p)
 }
+
+func (this *AuthorizeNet) Refund(transId, amount, cardNumber, expirationDate string) (result *TransactionRsp, err error) {
+	var p = &CreateTransactionParam{}
+	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_REFUND
+	p.CreateTransactionRequest.TransactionRequest.Amount = amount
+	var payment = &Payment{}
+	var creditCard = &CreditCard{}
+	creditCard.CardNumber = cardNumber
+	creditCard.ExpirationDate = expirationDate
+	payment.CreditCard = creditCard
+	p.CreateTransactionRequest.TransactionRequest.Payment = payment
+	p.CreateTransactionRequest.TransactionRequest.RefTransId = transId
+	return this.CreateTransaction(p)
+}

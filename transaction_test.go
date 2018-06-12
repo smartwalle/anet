@@ -7,7 +7,7 @@ import (
 
 func TestAuthorizeNet_CreateTransaction(t *testing.T) {
 	var p = &CreateTransactionParam{}
-	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_AUTH_ONLY
+	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_CHARGE
 	p.CreateTransactionRequest.TransactionRequest.Amount = "100"
 	var payment = &Payment{}
 	var creditCard = &CreditCard{}
@@ -15,7 +15,7 @@ func TestAuthorizeNet_CreateTransaction(t *testing.T) {
 	creditCard.ExpirationDate = "2020-01"
 	creditCard.CardCode = "123"
 	payment.CreditCard = creditCard
-	p.CreateTransactionRequest.TransactionRequest.PoNumber = "123456789"
+	p.CreateTransactionRequest.TransactionRequest.PoNumber = "123456789011"
 	p.CreateTransactionRequest.TransactionRequest.Payment = payment
 
 	var billTo = &Address{}
@@ -32,7 +32,7 @@ func TestAuthorizeNet_CreateTransaction(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	fmt.Println(rsp.Messages.ResultCode)
+	fmt.Println(rsp.TransactionResponse.TransId)
 }
 
 //func TestAuthorizeNet_Charge(t *testing.T) {
@@ -46,3 +46,7 @@ func TestAuthorizeNet_CreateTransaction(t *testing.T) {
 //func TestAuthorizeNet_CaptureWithAutoCode(t *testing.T) {
 //	client.CaptureWithAutoCode("MFQFPQ", "100", "5145919892544954", "2020-01", "123")
 //}
+
+func TestAuthorizeNet_Refund(t *testing.T) {
+	client.Refund("60104457023", "100", "4954", "2020-01")
+}

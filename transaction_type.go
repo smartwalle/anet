@@ -5,6 +5,7 @@ const (
 	K_TRANSACTION_TYPE_AUTH_ONLY              = "authOnlyTransaction"
 	K_TRANSACTION_TYPE_CAPTURE_WITH_TRANS_ID  = "priorAuthCaptureTransaction"
 	K_TRANSACTION_TYPE_CAPTURE_WITH_AUTH_CODE = "captureOnlyTransaction"
+	K_TRANSACTION_TYPE_REFUND                 = "refundTransaction"
 )
 
 type CreateTransactionParam struct {
@@ -13,7 +14,6 @@ type CreateTransactionParam struct {
 		TransactionRequest struct {
 			TransactionType string     `json:"transactionType,omitempty"`
 			Amount          string     `json:"amount"`
-			RefTransId      string     `json:"refTransId,omitempty"`
 			Payment         *Payment   `json:"payment,omitempty"`
 			LineItems       *LineItems `json:"lineItems,omitempty"`
 			Tax             *Amount    `json:"tax,omitempty"`
@@ -24,6 +24,7 @@ type CreateTransactionParam struct {
 			BillTo          *Address   `json:"billTo,omitempty"`
 			ShipTo          *Address   `json:"shipTo,omitempty"`
 			CustomerIP      string     `json:"customerIP,omitempty"`
+			RefTransId      string     `json:"refTransId,omitempty"`
 			AuthCode        string     `json:"authCode,omitempty"`
 		} `json:"transactionRequest"`
 	} `json:"createTransactionRequest"`
@@ -34,9 +35,9 @@ func (this *CreateTransactionParam) SetMerchantAuthentication(m MerchantAuthenti
 }
 
 type CreditCard struct {
-	CardNumber     string `json:"cardNumber"`
-	ExpirationDate string `json:"expirationDate"`
-	CardCode       string `json:"cardCode"`
+	CardNumber     string `json:"cardNumber,omitempty"`
+	ExpirationDate string `json:"expirationDate,omitempty"`
+	CardCode       string `json:"cardCode,omitempty"`
 }
 
 type Payment struct {
