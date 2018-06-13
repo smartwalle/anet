@@ -1,8 +1,8 @@
 package anet4go
 
 import (
-	"testing"
 	"fmt"
+	"testing"
 )
 
 //func TestAuthorizeNet_CreateTransaction(t *testing.T) {
