@@ -34,7 +34,7 @@ func (this *AuthorizeNet) ChargeWithCreditCard(poNumber, amount, firstName, last
 	return this.CreateTransaction(p)
 }
 
-func (this *AuthorizeNet) AuthWithCreditCard(poNumber, amount, firstName, lastName, cardNumber, expirationDate, cardCode, country, state, city, zip, address string) (result *TransactionRsp, err error) {
+func (this *AuthorizeNet) AuthWithCreditCard(poNumber, amount, cardNumber, expirationDate, cardCode, firstName, lastName, country, state, city, zip, address string) (result *TransactionRsp, err error) {
 	var p = &CreateTransactionParam{}
 	p.CreateTransactionRequest.TransactionRequest.PoNumber = poNumber
 	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_AUTH_ONLY

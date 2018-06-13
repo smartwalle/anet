@@ -40,7 +40,7 @@ import (
 //}
 //
 //func TestAuthorizeNet_Auth(t *testing.T) {
-//	fmt.Println(client.AuthWithCreditCard("1234", "100", "f", "y", "5145919892544954", "2020-01", "123", "China", "SC", "CD", "123456", "ADD"))
+//	fmt.Println(client.AuthWithCreditCard("1234", "100", "5145919892544954", "2020-01", "123", "f", "y", "China", "SC", "CD", "123456", "ADD"))
 //}
 //
 //func TestAuthorizeNet_CaptureWithTransId(t *testing.T) {
