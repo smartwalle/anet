@@ -2,10 +2,13 @@ package anet4go
 
 func (this *AuthorizeNet) CreateTransaction(param *CreateTransactionParam) (result *TransactionRsp, err error) {
 	err = this.doRequest("POST", param, &result)
+	if result.Messages.ResultCode != "Ok" && err == nil {
+		err = result.Messages
+	}
 	return result, err
 }
 
-func (this *AuthorizeNet) Charge(poNumber, amount, firstName, lastName, cardNumber, expirationDate, cardCode, country, state, city, zip, address string) (result *TransactionRsp, err error) {
+func (this *AuthorizeNet) ChargeWithCreditCard(poNumber, amount, firstName, lastName, cardNumber, expirationDate, cardCode, country, state, city, zip, address string) (result *TransactionRsp, err error) {
 	var p = &CreateTransactionParam{}
 	p.CreateTransactionRequest.TransactionRequest.PoNumber = poNumber
 	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_CHARGE
@@ -31,7 +34,7 @@ func (this *AuthorizeNet) Charge(poNumber, amount, firstName, lastName, cardNumb
 	return this.CreateTransaction(p)
 }
 
-func (this *AuthorizeNet) Auth(poNumber, amount, firstName, lastName, cardNumber, expirationDate, cardCode, country, state, city, zip, address string) (result *TransactionRsp, err error) {
+func (this *AuthorizeNet) AuthWithCreditCard(poNumber, amount, firstName, lastName, cardNumber, expirationDate, cardCode, country, state, city, zip, address string) (result *TransactionRsp, err error) {
 	var p = &CreateTransactionParam{}
 	p.CreateTransactionRequest.TransactionRequest.PoNumber = poNumber
 	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_AUTH_ONLY
@@ -61,6 +64,7 @@ func (this *AuthorizeNet) CaptureWithTransId(transId, amount string) (result *Tr
 	var p = &CreateTransactionParam{}
 	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_CAPTURE_WITH_TRANS_ID
 	p.CreateTransactionRequest.TransactionRequest.Amount = amount
+	p.CreateTransactionRequest.TransactionRequest.RefTransId = transId
 	return this.CreateTransaction(p)
 }
 
@@ -79,7 +83,7 @@ func (this *AuthorizeNet) CaptureWithAutoCode(authCode, amount, cardNumber, expi
 	return this.CreateTransaction(p)
 }
 
-func (this *AuthorizeNet) Refund(transId, amount, cardNumber, expirationDate string) (result *TransactionRsp, err error) {
+func (this *AuthorizeNet) RefundWithCreditCard(transId, amount, cardNumber, expirationDate string) (result *TransactionRsp, err error) {
 	var p = &CreateTransactionParam{}
 	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_REFUND
 	p.CreateTransactionRequest.TransactionRequest.Amount = amount
@@ -91,4 +95,57 @@ func (this *AuthorizeNet) Refund(transId, amount, cardNumber, expirationDate str
 	p.CreateTransactionRequest.TransactionRequest.Payment = payment
 	p.CreateTransactionRequest.TransactionRequest.RefTransId = transId
 	return this.CreateTransaction(p)
+}
+
+func (this *AuthorizeNet) DebitWithBankAccount(poNumber, amount, accountType, routingNumber, accountNumber, nameOnAccount, firstName, lastName, country, state, city, zip, address string) (result *TransactionRsp, err error) {
+	var p = &CreateTransactionParam{}
+	p.CreateTransactionRequest.TransactionRequest.PoNumber = poNumber
+	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_CHARGE
+	p.CreateTransactionRequest.TransactionRequest.Amount = amount
+	p.CreateTransactionRequest.RefId = poNumber
+	var payment = &Payment{}
+	var bankAccount = &BankAccount{}
+	bankAccount.AccountType = accountType
+	bankAccount.RoutingNumber = routingNumber
+	bankAccount.AccountNumber = accountNumber
+	bankAccount.NameOnAccount = nameOnAccount
+	payment.BankAccount = bankAccount
+	p.CreateTransactionRequest.TransactionRequest.Payment = payment
+
+	var billTo = &Address{}
+	billTo.Address = address
+	billTo.FirstName = firstName
+	billTo.LastName = lastName
+	billTo.Country = country
+	billTo.City = city
+	billTo.State = state
+	billTo.Zip = zip
+	p.CreateTransactionRequest.TransactionRequest.BillTo = billTo
+	return this.CreateTransaction(p)
+}
+
+func (this *AuthorizeNet) CreditWithBankAccount(transId, amount, accountType, routingNumber, accountNumber, nameOnAccount string) (result *TransactionRsp, err error) {
+	var p = &CreateTransactionParam{}
+	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_REFUND
+	p.CreateTransactionRequest.TransactionRequest.Amount = amount
+	var payment = &Payment{}
+	var bankAccount = &BankAccount{}
+	bankAccount.AccountType = accountType
+	bankAccount.RoutingNumber = routingNumber
+	bankAccount.AccountNumber = accountNumber
+	bankAccount.NameOnAccount = nameOnAccount
+	payment.BankAccount = bankAccount
+	p.CreateTransactionRequest.TransactionRequest.Payment = payment
+	p.CreateTransactionRequest.TransactionRequest.RefTransId = transId
+	return this.CreateTransaction(p)
+}
+
+func (this *AuthorizeNet) GetTransactionDetails(transId string) (result *TransactionDetailsRsp, err error) {
+	var param = &TransactionDetailsParam{}
+	param.GetTransactionDetailsRequest.TransId = transId
+	err = this.doRequest("POST", param, &result)
+	if result.Messages.ResultCode != "Ok" && err == nil {
+		err = result.Messages
+	}
+	return result, err
 }

@@ -1,5 +1,7 @@
 package anet4go
 
+import "fmt"
+
 type Message struct {
 	Code        string `json:"code"`
 	Text        string `json:"text"`
@@ -9,6 +11,17 @@ type Message struct {
 type Messages struct {
 	ResultCode string     `json:"resultCode"`
 	Message    []*Message `json:"message"`
+}
+
+func (this *Messages) Error() string {
+	var msg *Message
+	if len(this.Message) > 0 {
+		msg = this.Message[0]
+	}
+	if msg != nil {
+		return fmt.Sprintf("[%s - %s] %s", this.ResultCode, msg.Code, msg.Text)
+	}
+	return this.ResultCode
 }
 
 type MerchantAuthentication struct {
