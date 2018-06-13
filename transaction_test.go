@@ -1,5 +1,10 @@
 package anet4go
 
+import (
+	"testing"
+	"fmt"
+)
+
 //func TestAuthorizeNet_CreateTransaction(t *testing.T) {
 //	var p = &CreateTransactionParam{}
 //	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_CHARGE
@@ -54,6 +59,6 @@ package anet4go
 //	fmt.Println(client.GetTransactionDetails("60104455428"))
 //}
 //
-//func TestAuthorizeNet_DebitWithBankAccount(t *testing.T) {
-//	fmt.Println(client.DebitWithBankAccount("1234", "1000", K_ACCOUNT_TYPE_CHECKING, "121042882", "123456789", "John Doe", "", "", "", "", "", "", ""))
-//}
+func TestAuthorizeNet_DebitWithBankAccount(t *testing.T) {
+	fmt.Println(client.DebitWithBankAccount("1234", "1000", K_ACCOUNT_TYPE_CHECKING, "121042882", "123456789", "John Doe", "", "", "", "", "", "", "", "", "", ""))
+}

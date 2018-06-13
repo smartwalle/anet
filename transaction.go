@@ -97,7 +97,7 @@ func (this *AuthorizeNet) RefundWithCreditCard(transId, amount, cardNumber, expi
 	return this.CreateTransaction(p)
 }
 
-func (this *AuthorizeNet) DebitWithBankAccount(poNumber, amount, accountType, routingNumber, accountNumber, nameOnAccount, firstName, lastName, country, state, city, zip, address string) (result *TransactionRsp, err error) {
+func (this *AuthorizeNet) DebitWithBankAccount(poNumber, amount, accountType, routingNumber, accountNumber, nameOnAccount, eCheckType, bankName, checkNumber, firstName, lastName, country, state, city, zip, address string) (result *TransactionRsp, err error) {
 	var p = &CreateTransactionParam{}
 	p.CreateTransactionRequest.TransactionRequest.PoNumber = poNumber
 	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_CHARGE
@@ -109,6 +109,9 @@ func (this *AuthorizeNet) DebitWithBankAccount(poNumber, amount, accountType, ro
 	bankAccount.RoutingNumber = routingNumber
 	bankAccount.AccountNumber = accountNumber
 	bankAccount.NameOnAccount = nameOnAccount
+	bankAccount.ECheckType = eCheckType
+	bankAccount.BankName = bankName
+	bankAccount.CheckNumber = checkNumber
 	payment.BankAccount = bankAccount
 	p.CreateTransactionRequest.TransactionRequest.Payment = payment
 
