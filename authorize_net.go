@@ -3,7 +3,6 @@ package anet4go
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -71,8 +70,6 @@ func (this *AuthorizeNet) doRequest(method string, param Param, results interfac
 		return err
 	}
 	data = bytes.TrimPrefix(data, k_RESPONSE_PREFIX)
-
-	fmt.Println(string(data))
 
 	err = json.Unmarshal(data, results)
 	if err != nil {

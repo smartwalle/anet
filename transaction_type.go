@@ -95,15 +95,16 @@ type Amount struct {
 }
 
 type Address struct {
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	Company   string `json:"company"`
-	Address   string `json:"address"`
-	City      string `json:"city"`
-	State     string `json:"state"`
-	Zip       string `json:"zip"`
-	Country   string `json:"country"`
-	Phone     string `json:"phone"`
+	FirstName   string `json:"firstName"`
+	LastName    string `json:"lastName"`
+	Company     string `json:"company"`
+	Address     string `json:"address"`
+	City        string `json:"city"`
+	State       string `json:"state"`
+	Zip         string `json:"zip"`
+	Country     string `json:"country"`
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+	FaxNumber   string `json:"faxNumber,omitempty"`
 }
 
 type LineItem struct {
