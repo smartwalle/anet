@@ -1,9 +1,6 @@
 package anet4go
 
-import (
-	"fmt"
-	"testing"
-)
+import "testing"
 
 //func TestAuthorizeNet_CreateTransaction(t *testing.T) {
 //	var p = &CreateTransactionParam{}
@@ -51,14 +48,14 @@ import (
 //	client.CaptureWithAutoCode("MFQFPQ", "100", "5145919892544954", "2020-01", "123")
 //}
 //
-//func TestAuthorizeNet_Refund(t *testing.T) {
-//	client.RefundWithCreditCard("60104455428", "100", "4954", "2020-01")
-//}
+func TestAuthorizeNet_Refund(t *testing.T) {
+	client.RefundWithCreditCard("60106065113", "116.55", "4954", "2020-2")
+}
 //
 //func TestAuthorizeNet_GetTransactionDetails(t *testing.T) {
 //	fmt.Println(client.GetTransactionDetails("60104455428"))
 //}
 //
-func TestAuthorizeNet_DebitWithBankAccount(t *testing.T) {
-	fmt.Println(client.DebitWithBankAccount("1234", "1000", K_ACCOUNT_TYPE_CHECKING, "121042882", "123456789", "John Doe", "", "", "", "", "", "", "", "", "", ""))
-}
+//func TestAuthorizeNet_DebitWithBankAccount(t *testing.T) {
+//	fmt.Println(client.DebitWithBankAccount("1234", "1000", K_ACCOUNT_TYPE_CHECKING, "121042882", "123456789", "John Doe", "", "", "", "", "", "", "", "", "", ""))
+//}

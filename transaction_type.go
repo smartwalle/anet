@@ -103,6 +103,7 @@ type Address struct {
 	State     string `json:"state"`
 	Zip       string `json:"zip"`
 	Country   string `json:"country"`
+	Phone     string `json:"phone"`
 }
 
 type LineItem struct {

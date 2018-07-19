@@ -8,7 +8,7 @@ func (this *AuthorizeNet) CreateTransaction(param *CreateTransactionParam) (resu
 	return result, err
 }
 
-func (this *AuthorizeNet) ChargeWithCreditCard(poNumber, amount, cardNumber, expirationDate, cardCode, firstName, lastName, country, state, city, zip, address string) (result *TransactionRsp, err error) {
+func (this *AuthorizeNet) ChargeWithCreditCard(poNumber, amount, cardNumber, expirationDate, cardCode, firstName, lastName, country, state, city, zip, phone, address string) (result *TransactionRsp, err error) {
 	var p = &CreateTransactionParam{}
 	p.CreateTransactionRequest.TransactionRequest.PoNumber = poNumber
 	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_CHARGE
@@ -30,11 +30,12 @@ func (this *AuthorizeNet) ChargeWithCreditCard(poNumber, amount, cardNumber, exp
 	billTo.City = city
 	billTo.State = state
 	billTo.Zip = zip
+	billTo.Phone = phone
 	p.CreateTransactionRequest.TransactionRequest.BillTo = billTo
 	return this.CreateTransaction(p)
 }
 
-func (this *AuthorizeNet) AuthWithCreditCard(poNumber, amount, cardNumber, expirationDate, cardCode, firstName, lastName, country, state, city, zip, address string) (result *TransactionRsp, err error) {
+func (this *AuthorizeNet) AuthWithCreditCard(poNumber, amount, cardNumber, expirationDate, cardCode, firstName, lastName, country, state, city, zip, phone, address string) (result *TransactionRsp, err error) {
 	var p = &CreateTransactionParam{}
 	p.CreateTransactionRequest.TransactionRequest.PoNumber = poNumber
 	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_AUTH_ONLY
@@ -56,6 +57,7 @@ func (this *AuthorizeNet) AuthWithCreditCard(poNumber, amount, cardNumber, expir
 	billTo.City = city
 	billTo.State = state
 	billTo.Zip = zip
+	billTo.Phone = phone
 	p.CreateTransactionRequest.TransactionRequest.BillTo = billTo
 	return this.CreateTransaction(p)
 }
@@ -97,7 +99,7 @@ func (this *AuthorizeNet) RefundWithCreditCard(transId, amount, cardNumber, expi
 	return this.CreateTransaction(p)
 }
 
-func (this *AuthorizeNet) DebitWithBankAccount(poNumber, amount, accountType, routingNumber, accountNumber, nameOnAccount, eCheckType, bankName, checkNumber, firstName, lastName, country, state, city, zip, address string) (result *TransactionRsp, err error) {
+func (this *AuthorizeNet) DebitWithBankAccount(poNumber, amount, accountType, routingNumber, accountNumber, nameOnAccount, eCheckType, bankName, checkNumber, firstName, lastName, country, state, city, zip, phone, address string) (result *TransactionRsp, err error) {
 	var p = &CreateTransactionParam{}
 	p.CreateTransactionRequest.TransactionRequest.PoNumber = poNumber
 	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_CHARGE
@@ -123,6 +125,7 @@ func (this *AuthorizeNet) DebitWithBankAccount(poNumber, amount, accountType, ro
 	billTo.City = city
 	billTo.State = state
 	billTo.Zip = zip
+	billTo.Phone = phone
 	p.CreateTransactionRequest.TransactionRequest.BillTo = billTo
 	return this.CreateTransaction(p)
 }
