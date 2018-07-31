@@ -3,7 +3,11 @@ package anet4go
 func (this *AuthorizeNet) CreateTransaction(param *CreateTransactionParam) (result *TransactionRsp, err error) {
 	err = this.doRequest("POST", param, &result)
 	if result.Messages.ResultCode != "Ok" && err == nil {
-		err = result.Messages
+		if len(result.TransactionResponse.Errors) > 0 {
+			err = result.TransactionResponse.Errors[0]
+		} else {
+			err = result.Messages
+		}
 	}
 	return result, err
 }

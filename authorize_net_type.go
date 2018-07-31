@@ -37,3 +37,12 @@ type BasicParam struct {
 	MerchantAuthentication MerchantAuthentication `json:"merchantAuthentication"`
 	RefId                  string                 `json:"refId"`
 }
+
+type Error struct {
+	ErrorCode string `json:"errorCode"`
+	ErrorText string `json:"errorText"`
+}
+
+func (this *Error) Error() string {
+	return fmt.Sprintf("%s - %s", this.ErrorCode, this.ErrorText)
+}

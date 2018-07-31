@@ -62,6 +62,7 @@ type TransactionRsp struct {
 		AccountNumber  string     `json:"accountNumber"`
 		AccountType    string     `json:"accountType"`
 		Messages       []*Message `json:"messages"`
+		Errors         []*Error   `json:"errors"`
 	} `json:"transactionResponse"`
 	RefId    string    `json:"refId"`
 	Messages *Messages `json:"messages"`
