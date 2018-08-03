@@ -17,7 +17,6 @@ func (this *AuthorizeNet) ChargeWithCreditCard(poNumber, amount, cardNumber, exp
 	p.CreateTransactionRequest.TransactionRequest.PoNumber = poNumber
 	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_CHARGE
 	p.CreateTransactionRequest.TransactionRequest.Amount = amount
-	p.CreateTransactionRequest.RefId = poNumber
 	var payment = &Payment{}
 	var creditCard = &CreditCard{}
 	creditCard.CardNumber = cardNumber
@@ -45,7 +44,6 @@ func (this *AuthorizeNet) AuthWithCreditCard(poNumber, amount, cardNumber, expir
 	p.CreateTransactionRequest.TransactionRequest.PoNumber = poNumber
 	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_AUTH_ONLY
 	p.CreateTransactionRequest.TransactionRequest.Amount = amount
-	p.CreateTransactionRequest.RefId = poNumber
 	var payment = &Payment{}
 	var creditCard = &CreditCard{}
 	creditCard.CardNumber = cardNumber
@@ -110,7 +108,6 @@ func (this *AuthorizeNet) DebitWithBankAccount(poNumber, amount, accountType, ro
 	p.CreateTransactionRequest.TransactionRequest.PoNumber = poNumber
 	p.CreateTransactionRequest.TransactionRequest.TransactionType = K_TRANSACTION_TYPE_CHARGE
 	p.CreateTransactionRequest.TransactionRequest.Amount = amount
-	p.CreateTransactionRequest.RefId = poNumber
 	var payment = &Payment{}
 	var bankAccount = &BankAccount{}
 	bankAccount.AccountType = accountType
