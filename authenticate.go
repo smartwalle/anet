@@ -1,6 +1,6 @@
-package anet4go
+package anet
 
-func (this *AuthorizeNet) AuthenticateTest() (result *AuthenticateTestRsp, err error) {
+func (this *Client) AuthenticateTest() (result *AuthenticateTestRsp, err error) {
 	var param = &AuthenticateTestParam{}
 	err = this.doRequest("POST", param, &result)
 	return result, err

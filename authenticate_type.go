@@ -1,4 +1,4 @@
-package anet4go
+package anet
 
 type AuthenticateTestParam struct {
 	AuthenticateTestRequest struct {

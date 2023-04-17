@@ -1,46 +1,52 @@
-package anet4go
+package anet
+
+type TransactionType string
 
 const (
-	K_TRANSACTION_TYPE_CHARGE                 = "authCaptureTransaction"
-	K_TRANSACTION_TYPE_AUTH_ONLY              = "authOnlyTransaction"
-	K_TRANSACTION_TYPE_CAPTURE_WITH_TRANS_ID  = "priorAuthCaptureTransaction"
-	K_TRANSACTION_TYPE_CAPTURE_WITH_AUTH_CODE = "captureOnlyTransaction"
-	K_TRANSACTION_TYPE_REFUND                 = "refundTransaction"
+	TransactionTypeCharge              TransactionType = "authCaptureTransaction"
+	TransactionTypeAuthOnly            TransactionType = "authOnlyTransaction"
+	TransactionTypeCaptureWithTransId  TransactionType = "priorAuthCaptureTransaction"
+	TransactionTypeCaptureWithAuthCode TransactionType = "captureOnlyTransaction"
+	TransactionTypeRefund              TransactionType = "refundTransaction"
 )
 
-const (
-	K_ECHECK_TYPE_PPD = "PPD"
-	K_ECHECK_TYPE_WEB = "WEB"
-	K_ECHECK_TYPE_CCD = "CCD"
-	K_ECHECK_TYPE_TEL = "TEL"
-	K_ECHECK_TYPE_ARC = "ARC"
-	K_ECHECK_TYPE_BOC = "BOC"
-)
+type ECheckType string
 
 const (
-	K_ACCOUNT_TYPE_CHECKING          = "checking"
-	K_ACCOUNT_TYPE_SAVING            = "savings"
-	K_ACCOUNT_TYPE_BUSINESS_CHECKING = "businessChecking"
+	ECheckTypePPD ECheckType = "PPD"
+	ECheckTypeWEB ECheckType = "WEB"
+	ECheckTypeCCD ECheckType = "CCD"
+	ECheckTypeTEL ECheckType = "TEL"
+	ECheckTypeARC ECheckType = "ARC"
+	ECheckTypeBOC ECheckType = "BOC"
+)
+
+type AccountType string
+
+const (
+	AccountTypeChecking         AccountType = "checking"
+	AccountTypeSaving           AccountType = "savings"
+	AccountTypeBusinessChecking AccountType = "businessChecking"
 )
 
 type CreateTransactionParam struct {
 	CreateTransactionRequest struct {
 		BasicParam
 		TransactionRequest struct {
-			TransactionType string     `json:"transactionType,omitempty"`
-			Amount          string     `json:"amount,omitempty"`
-			Payment         *Payment   `json:"payment,omitempty"`
-			LineItems       *LineItems `json:"lineItems,omitempty"`
-			Tax             *Amount    `json:"tax,omitempty"`
-			Duty            *Amount    `json:"duty,omitempty"`
-			Shipping        *Amount    `json:"shipping,omitempty"`
-			PoNumber        string     `json:"poNumber,omitempty"`
-			Customer        *Customer  `json:"customer,omitempty"`
-			BillTo          *Address   `json:"billTo,omitempty"`
-			ShipTo          *Address   `json:"shipTo,omitempty"`
-			CustomerIP      string     `json:"customerIP,omitempty"`
-			RefTransId      string     `json:"refTransId,omitempty"`
-			AuthCode        string     `json:"authCode,omitempty"`
+			TransactionType TransactionType `json:"transactionType,omitempty"`
+			Amount          string          `json:"amount,omitempty"`
+			Payment         *Payment        `json:"payment,omitempty"`
+			LineItems       *LineItems      `json:"lineItems,omitempty"`
+			Tax             *Amount         `json:"tax,omitempty"`
+			Duty            *Amount         `json:"duty,omitempty"`
+			Shipping        *Amount         `json:"shipping,omitempty"`
+			PoNumber        string          `json:"poNumber,omitempty"`
+			Customer        *Customer       `json:"customer,omitempty"`
+			BillTo          *Address        `json:"billTo,omitempty"`
+			ShipTo          *Address        `json:"shipTo,omitempty"`
+			CustomerIP      string          `json:"customerIP,omitempty"`
+			RefTransId      string          `json:"refTransId,omitempty"`
+			AuthCode        string          `json:"authCode,omitempty"`
 		} `json:"transactionRequest"`
 	} `json:"createTransactionRequest"`
 }
@@ -75,13 +81,13 @@ type CreditCard struct {
 }
 
 type BankAccount struct {
-	AccountType   string `json:"accountType,omitempty"`
-	RoutingNumber string `json:"routingNumber,omitempty"`
-	AccountNumber string `json:"accountNumber,omitempty"`
-	NameOnAccount string `json:"nameOnAccount,omitempty"`
-	ECheckType    string `json:"echeckType,omitempty"`
-	BankName      string `json:"bankName,omitempty"`
-	CheckNumber   string `json:"checkNumber,omitempty"`
+	AccountType   AccountType `json:"accountType,omitempty"`
+	RoutingNumber string      `json:"routingNumber,omitempty"`
+	AccountNumber string      `json:"accountNumber,omitempty"`
+	NameOnAccount string      `json:"nameOnAccount,omitempty"`
+	ECheckType    ECheckType  `json:"echeckType,omitempty"`
+	BankName      string      `json:"bankName,omitempty"`
+	CheckNumber   string      `json:"checkNumber,omitempty"`
 }
 
 type Payment struct {
@@ -164,7 +170,7 @@ type Transaction struct {
 	FDSFilterAction           string        `json:"FDSFilterAction"`
 	FDSFilters                *FDSFilters   `json:"FDSFilters"`
 	Batch                     *Batch        `json:"batch"`
-	Order                     *Order        `json:"order"order`
+	Order                     *Order        `json:"order"`
 	RequestedAmount           string        `json:"requestedAmount"`
 	AuthAmount                string        `json:"authAmount"`
 	SettleAmount              string        `json:"settleAmount"`

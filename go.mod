@@ -1,3 +1,3 @@
-module github.com/smartwalle/anet4go
+module github.com/smartwalle/anet
 
-go 1.12
+go 1.18

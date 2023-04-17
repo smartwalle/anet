@@ -1,4 +1,4 @@
-package anet4go
+package anet
 
 import "fmt"
 
