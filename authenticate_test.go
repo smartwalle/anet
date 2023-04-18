@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestAuthorize_AuthenticateTest(t *testing.T) {
+func TestClient_AuthenticateTest(t *testing.T) {
 	var rsp, err = client.AuthenticateTest()
 	if err != nil {
 		t.Fatal(err)

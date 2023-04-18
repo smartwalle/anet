@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	kAPILoginId     = "4Wb9uKQ8L"
-	kTransactionKey = "43H7ncQDc65979ky"
+	kAPILoginId     = "8bSv25KY"
+	kTransactionKey = "3D7zFXrt6ebD535V"
 )
 
 var client *anet.Client

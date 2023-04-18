@@ -74,7 +74,7 @@ func (this *Client) CaptureWithTransId(transId, amount string) (result *Transact
 	return this.CreateTransaction(p)
 }
 
-func (this *Client) CaptureWithAutoCode(authCode, amount, cardNumber, expirationDate, cardCode string) (result *TransactionRsp, err error) {
+func (this *Client) CaptureWithAuthCode(authCode, amount, cardNumber, expirationDate, cardCode string) (result *TransactionRsp, err error) {
 	var p = &CreateTransactionParam{}
 	p.CreateTransactionRequest.TransactionRequest.TransactionType = TransactionTypeCaptureWithAuthCode
 	p.CreateTransactionRequest.TransactionRequest.Amount = amount
