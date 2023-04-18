@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	kProductionAPIURL = "https://api.authorize.net/xml/v1/request.api"
-	kSandboxAPIURL    = "https://apitest.authorize.net/xml/v1/request.api"
+	kProductionURL = "https://api.authorize.net/xml/v1/request.api"
+	kSandboxURL    = "https://apitest.authorize.net/xml/v1/request.api"
 )
 
 var (
@@ -32,9 +32,9 @@ func New(apiLoginId, transactionKey string, isProduction bool) (client *Client) 
 	client.transactionKey = transactionKey
 	client.m = MerchantAuthentication{Name: apiLoginId, TransactionKey: transactionKey}
 	if isProduction {
-		client.apiDomain = kProductionAPIURL
+		client.apiDomain = kProductionURL
 	} else {
-		client.apiDomain = kSandboxAPIURL
+		client.apiDomain = kSandboxURL
 	}
 	return client
 }
