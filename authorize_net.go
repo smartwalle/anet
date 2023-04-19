@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
-	"strings"
 )
 
 const (
@@ -21,7 +20,7 @@ type Client struct {
 	apiDomain      string
 	apiLoginId     string
 	transactionKey string
-	m              MerchantAuthentication
+	authentication MerchantAuthentication
 	Client         *http.Client
 }
 
@@ -30,7 +29,7 @@ func New(apiLoginId, transactionKey string, isProduction bool) (client *Client) 
 	client.Client = http.DefaultClient
 	client.apiLoginId = apiLoginId
 	client.transactionKey = transactionKey
-	client.m = MerchantAuthentication{Name: apiLoginId, TransactionKey: transactionKey}
+	client.authentication = MerchantAuthentication{Name: apiLoginId, TransactionKey: transactionKey}
 	if isProduction {
 		client.apiDomain = kProductionURL
 	} else {
@@ -39,15 +38,15 @@ func New(apiLoginId, transactionKey string, isProduction bool) (client *Client) 
 	return client
 }
 
-func (this *Client) doRequest(method string, param Param, results interface{}) (err error) {
+func (this *Client) doRequest(method string, param Param, results interface{}) error {
 	var body io.Reader
 	if param != nil {
-		param.SetMerchantAuthentication(this.m)
-		p, err := json.Marshal(param)
+		param.SetMerchantAuthentication(this.authentication)
+		pData, err := json.Marshal(param)
 		if err != nil {
 			return err
 		}
-		body = strings.NewReader(string(p))
+		body = bytes.NewReader(pData)
 	}
 
 	req, err := http.NewRequest(method, this.apiDomain, body)
