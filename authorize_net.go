@@ -8,8 +8,8 @@ import (
 )
 
 const (
-	kProductionURL = "https://api.authorize.net/xml/v1/request.api"
-	kSandboxURL    = "https://apitest.authorize.net/xml/v1/request.api"
+	kProduction = "https://api.authorize.net/xml/v1/request.api"
+	kSandbox    = "https://apitest.authorize.net/xml/v1/request.api"
 )
 
 var (
@@ -17,7 +17,7 @@ var (
 )
 
 type Client struct {
-	apiDomain      string
+	host           string
 	apiLoginId     string
 	transactionKey string
 	authentication MerchantAuthentication
@@ -31,9 +31,9 @@ func New(apiLoginId, transactionKey string, isProduction bool) (client *Client) 
 	client.transactionKey = transactionKey
 	client.authentication = MerchantAuthentication{Name: apiLoginId, TransactionKey: transactionKey}
 	if isProduction {
-		client.apiDomain = kProductionURL
+		client.host = kProduction
 	} else {
-		client.apiDomain = kSandboxURL
+		client.host = kSandbox
 	}
 	return client
 }
@@ -49,7 +49,7 @@ func (this *Client) doRequest(method string, param Param, results interface{}) e
 		body = bytes.NewReader(pData)
 	}
 
-	req, err := http.NewRequest(method, this.apiDomain, body)
+	req, err := http.NewRequest(method, this.host, body)
 	if err != nil {
 		return err
 	}
